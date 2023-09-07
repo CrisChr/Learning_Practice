@@ -1,7 +1,7 @@
 function DeepClone(source, hash=new WeakMap()){
   if(source === null) return null;
 
-  //为了解决循环引用和相同引用的问题，存放已经递归到的目标对象
+  //为了解决循环引用（即对象的属性直接的引用了自身的情况）和相同引用的问题，存放已经递归到的目标对象
   if(hash.get(source)) return hash.get(source);
 
   //基本数据类型
@@ -32,23 +32,24 @@ function DeepClone(source, hash=new WeakMap()){
         return clone(Object.keys(source));
       case "[object Map]":
         result = new Map();
+        // map对象有forEach方法
         source.forEach((value, key) => {
           result.set(key, DeepClone(value, hash))
         })
         return result;
       case "[object Set]":
         result = new Set();
-        source.forEach((key, value) => {
+        source.forEach((value) => {
           result.add(DeepClone(value, hash));
         })
         return result;
-      case "[object Symbol]":
-        //Symbol类型
-        let symKeys = Object.getOwnPropertySymbols(source);
-        if(symKeys.length){
-          return clone(symKeys);
-        }
-        break;
+      // case "[object Symbol]":
+      //   //Symbol类型
+      //   let symKeys = Object.getOwnPropertySymbols(source);
+      //   if(symKeys.length){
+      //     return clone(symKeys);
+      //   }
+      //   break;
       case "[object Date]":
         result = new Date(source);
         return result;
@@ -57,6 +58,17 @@ function DeepClone(source, hash=new WeakMap()){
         return result; //正则
     }
   }
+}
+
+// 浅拷贝：Object.assign(), Array.prototype.concat(), Array.prototype.slice(), ...展开运算符
+function shallowCopy(sourceObj){
+  let targetObj = Object.create(null);
+  for(source in sourceObj){
+    if(sourceObj.hasOwnProperty(source)){
+      targetObj[source] = sourceObj[source];
+    }
+  }
+  return targetObj;
 }
 
 let a = 66;
