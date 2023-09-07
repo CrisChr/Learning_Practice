@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <style>
+
+      .box{
+        width: 300px;
+        height: 300px;
+        background: burlywood;
+        position: relative;
+      }
+      .a{
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background: yellowgreen;
+        top: 50%;
+        left: 50%;
+        /* margin: -50px 0 0 -50px; */
+        transform: translate(-50%, -50%);
+      }
+
+
+      .table-box{
+        width: 300px;
+        height: 300px;
+        background: violet;
+        display: table-cell;
+        vertical-align: middle;
+      }
+      .b{
+        width: 100px;
+        height: 100px;
+        margin-left: 100px;
+        background: sandybrown;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="a"></div>
+    </div>
+
+    <div class="table-box">
+      <div class="b"></div>
+    </div>
+  </body>
+</html>

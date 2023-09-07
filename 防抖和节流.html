@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>防抖</title>
+</head>
+<body>
+  <div>
+    <ul>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+      <li>hahahah</li>
+    </ul>
+  </div>
+
+  <script>
+
+    function handle(v){
+      console.log("滚动视图了~~~", v);
+    }
+
+    /*
+      节流：
+      在函数执行一次之后，该函数在指定的时间期限内不再工作，本质是延迟了函数的执行频率
+    */
+
+    /*
+      该函数会返回一个函数，形成一个闭包
+      每次函数被调用时，执行的是返回的这个函数
+      而valid=true，作为函数初始化调用时的变量，会被保存到内存中而不被销毁
+    */
+    function throttle(fn, delay=1000){
+      let valid = true;
+      return function(...args){
+        if(!valid){
+          return false;
+        }
+        valid = false;
+        setTimeout(() => {
+          fn();
+          valid = true;
+        }, delay);
+      }
+    }
+
+    /*
+    防抖：
+    在第一次触发事件时，不立即执行函数，而是给出一个期限值，
+    如果在期限值内，没有再次触发事件，就执行这个函数
+    如果在期限值内，多次触发了事件，则重新计时，保证了函数只执行一次
+
+    适用场景：短时间内多次触发同一事件
+            搜索框输入关键字，停顿多少时间后再触发自动搜索的事件
+            页面resize的时候，只需适配最后一次页面的size就可以了
+    */
+    function debounce(fn, delay=1000){
+      let timer = null;
+      return function(){
+        if(!!timer){
+          clearTimeout(timer);
+        }
+        timer = setTimeout(() => fn(), delay);
+      }
+    }
+
+    const deb = debounce(() => handle('aaa'), 200);
+    window.onscroll = deb;
+    // window.onscroll = throttle(handle);
+
+  </script>
+
+
+<script>
+  //节流throttle
+  // 控制函数执行的频率，一段时间内函数只执行一次
+  function MyThrottle(fn, delay=1000){
+    let timer = null;
+    return function(){
+      if(!timer){
+        timer = setTimeout(() => {
+          fn();
+          timer = null;
+        }, delay);
+      }
+    }
+  }
+
+  //防抖 debounce
+  //延长函数的执行，时间会累加，闭包造成内存泄露
+  function MyDebounce(fn, delay=1000){
+    let timer = null;
+    return function(){
+      if(timer){
+        clearTimeout(timer)
+      }
+      timer = setTimeout(() => {
+        fn();
+      }, delay)
+    }
+  }
+</script>
+</body>
+</html>
