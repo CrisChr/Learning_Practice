@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <my-button></my-button>
+
+
+  <template id="myButton">
+    <button>Add</button>
+  </template>
+
+  <script>
+    // class MyButton extends HTMLElement{
+    //   constructor(){
+    //     super();
+    //     const template = document.getElementById('myButton');
+    //     const content = template.content.cloneNode(true);
+    //     this.appendChild(content);
+    //   }
+    // }
+    // window.customElements.define('my-button', MyButton)
+
+    let a = new Array(0,1,2,4,6,8),
+          sum = 0;
+
+    for(let i=1; i<a.length; i+=2){
+      console.log(i)
+      sum += a[i]
+    }
+    console.log(sum)
+  </script>
+</body>
+</html>

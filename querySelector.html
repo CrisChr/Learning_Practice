@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+
+        <script>
+            
+            // {a: {b: {c: {d: {}}}}}
+            function namespace(oNamespace, sPackage) {
+            const packageArr = sPackage.split('.');
+            const len = packageArr.length;
+            let resObj = {};
+            for(let i=len-1; i>=0; i--){
+                const key = packageArr[i]
+                const obj = {
+                    ...resObj,
+                    [packageArr[i-1]]: {
+                      [key]: {}
+                    }
+                }
+            }
+            // return oNamespace
+            console.log(resObj);
+          } 
+
+          console.log(namespace({a: {test: 1, b: 2}}, 'a.b.c.d'))
+        </script>
+    </body>
+</html>
